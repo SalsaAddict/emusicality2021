@@ -1,0 +1,106 @@
+{
+    "$ref": "#/definitions/IBreakdown",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "IBreakdown": {
+            "additionalProperties": false,
+            "properties": {
+                "beatsPerMeasure": {
+                    "title": "beatsPerMeasure",
+                    "type": "number"
+                },
+                "bpm": {
+                    "title": "bpm",
+                    "type": "number"
+                },
+                "sections": {
+                    "items": {
+                        "$ref": "#/definitions/ISection"
+                    },
+                    "title": "sections",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "beatsPerMeasure",
+                "bpm",
+                "sections"
+            ],
+            "title": "IBreakdown",
+            "type": "object"
+        },
+        "IMeasure": {
+            "additionalProperties": false,
+            "properties": {
+                "beats": {
+                    "title": "beats",
+                    "type": "number"
+                },
+                "split": {
+                    "enum": [
+                        true
+                    ],
+                    "title": "split",
+                    "type": "boolean"
+                },
+                "structure": {
+                    "title": "structure",
+                    "type": "string"
+                }
+            },
+            "title": "IMeasure",
+            "type": "object"
+        },
+        "ISection": {
+            "additionalProperties": false,
+            "properties": {
+                "measures": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/definitions/IMeasure"
+                                    },
+                                    {
+                                        "enum": [
+                                            true
+                                        ],
+                                        "type": "boolean"
+                                    },
+                                    {
+                                        "type": [
+                                            "string",
+                                            "number"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "number"
+                        }
+                    ],
+                    "title": "measures"
+                },
+                "structure": {
+                    "title": "structure",
+                    "type": "string"
+                },
+                "title": {
+                    "title": "title",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "measures",
+                "structure",
+                "title"
+            ],
+            "title": "ISection",
+            "type": "object"
+        }
+    }
+}
+
