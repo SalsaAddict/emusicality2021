@@ -2,16 +2,19 @@
     "esoesamor": {
         "title": "Eso Es Amor",
         "artist": "Jiory",
-        "genre": "Bachata"
+        "genre": "Bachata",
+        "bpm": 132
     },
     "desnudate": {
         "title": "Desn&uacute;date",
         "artist": "Dani J",
-        "genre": "Bachata"
+        "genre": "Bachata",
+        "bpm": 132
     },
     "oldtownroad": {
         "title": "Old Town Road (Bachata Remix)",
         "artist": "DJ Dimen5ions &amp; DJ Tiguere",
-        "genre": "Bachata"
+        "genre": "Bachata",
+        "bpm": 132
     }
 }

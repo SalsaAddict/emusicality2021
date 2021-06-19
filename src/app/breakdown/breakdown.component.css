@@ -1,0 +1,17 @@
+@media (orientation: portrait) {
+  #beat {
+    font-size: 4vh;
+  }
+}
+
+@media (orientation: landscape) {
+  #breakdown * {
+    font-size: 4vh;
+  }
+  #beat * {
+    font-size: 8vh !important;
+  }
+  .progress, .progress-bar {
+      height: 5vh;
+  }
+}

@@ -1,0 +1,14 @@
+<div class="d-flex align-items-center">
+    <img [src]="imageSrc(songId)" class="img-thumbnail" style="width: 60px; height: 60px;">
+    <div class="flex-fill lh-sm d-inline-block text-truncate mx-2">
+        <b [innerHtml]="song.title"></b>
+        <br>
+        <small [innerHtml]="song.artist">{{song.artist}}</small>
+        <br>
+        <small class="text-muted" [innerHtml]="song.genre"></small>
+    </div>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <small class="badge bg-primary rounded-pill m-0">{{bpm ?? song.bpm | number}}bpm</small>
+            <h1 class="m-0" [ngClass]="{ 'text-primary': beat === 1 }" *ngIf="beat! >= 0">{{beat | number}}</h1>
+    </div>
+</div>

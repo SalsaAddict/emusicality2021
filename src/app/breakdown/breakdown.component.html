@@ -1,1 +1,65 @@
-<p>breakdown works!</p>
+<div id="breakdown"
+    class="flex-fill d-flex h-100 flex-column justify-content-around card bg-dark text-light px-2 pt-1 border border-5"
+    [class]="context('border-')">
+    <div class="d-flex flex-row justify-content-center">
+        <div *ngFor="let s of sections" [style.width]="(s.length / songLength * 100) + '%'"
+            class="progress progress-bar-animated">
+            <div [style.width]="progress(s)" class="progress-bar" [class]="'bg-' + s.context"
+                [ngClass]="{ 'progress-bar-striped progress-bar-animated': s === section }"></div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-around align-items-center text-center">
+        <div class="w-100">
+            <small class="text-muted initialism">Section</small>
+            <br>
+            <b [innerHtml]="section?.title ?? '&mdash;'" [class]="context()"></b>
+        </div>
+        <div id="beat" class="w-100"
+            [ngClass]="{ 'animate__animated animate__faster animate__heartBeat': this.beat === 1 }">
+            <i class="bi-exclamation" *ngIf="measure?.warning"></i>
+            <b>{{this.beat || "&mdash;"}}</b>
+            <i class="bi-exclamation" *ngIf="measure?.warning"></i>
+        </div>
+        <div class="w-100">
+            <small class="text-muted initialism">Structure</small>
+            <br>
+            <b [innerHtml]="measure?.structure ?? '&mdash;'"></b>
+        </div>
+    </div>
+    <div class="d-flex flex-column align-items-center" [ngSwitch]="!markers">
+        <Small class="text-muted initialism">Beats</Small>
+        <span *ngSwitchCase="true">&mdash;</span>
+        <div class="d-flex justify-content-center" *ngSwitchCase="false">
+            <div *ngFor="let m of markers; index as i" [ngClass]="{ 'ms-1': i > 0 }" [ngSwitch]="beat === i + 1">
+                <div *ngSwitchCase="true" class="animate__animated animate_faster animate__heartBeat"
+                    [ngSwitch]="measure?.warning">
+                    <i *ngSwitchCase="true" class="bi-exclamation-circle-fill"></i>
+                    <i *ngSwitchCase="false" class="bi-circle-fill"></i>
+                </div>
+                <i *ngSwitchCase="false" class="bi-circle"></i>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-column align-items-center" [ngSwitch]="!section?.phrases">
+        <Small class="text-muted initialism">Phrasing</Small>
+        <span *ngSwitchCase="true">&mdash;</span>
+        <div class="d-flex justify-content-center" *ngSwitchCase="false">
+            <div *ngFor="let phrase of section?.phrases; index as pi" [ngClass]="{ 'ms-2 ms-sm-3': pi > 0 }">
+                <div class="d-flex justify-content-center">
+                    <div *ngFor="let m of phrase; index as mi" [ngClass]="{ 'ms-1': mi > 0 }"
+                        [ngSwitch]="m === measure">
+                        <div *ngSwitchCase="true" class="animate__animated animate_faster animate__heartBeat"
+                            [ngSwitch]="m.warning">
+                            <i *ngSwitchCase="true" class="bi-exclamation-circle-fill"></i>
+                            <i *ngSwitchCase="false" class="bi-circle-fill"></i>
+                        </div>
+                        <div *ngSwitchCase="false" [ngSwitch]="m.warning">
+                            <i *ngSwitchCase="true" class="bi-exclamation-circle"></i>
+                            <i *ngSwitchCase="false" class="bi-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

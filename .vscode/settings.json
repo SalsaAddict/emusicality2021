@@ -4,13 +4,13 @@
             "fileMatch": [
                 "src/assets/songs/catalog.json"
             ],
-            "url": "./src/app/icatalog.schema.json"
+            "url": "/src/app/icatalog.schema.json"
         },
         {
             "fileMatch": [
                 "src/assets/songs/*/breakdown.json"
             ],
-            "url": "./src/app/ibreakdown.schema.json"
+            "url": "/src/app/ibreakdown.schema.json"
         }
     ]
 }

@@ -1,0 +1,154 @@
+<fieldset id="app-viewport" [disabled]="isBusy">
+    <div class="p-1 bg-dark text-light">
+        <app-song-header [songId]="songId" [song]="this"></app-song-header>
+    </div>
+    <div id="app-container">
+        <div id="app-breakdown" class="flex-fill">
+            <app-breakdown [bpm]="bpm" [sections]="sections" [beats]="beats" [length]="length" (navigation)="navigation($event)" class="flex-fill"></app-breakdown>
+        </div>
+        <div id="app-tracks" class="card bg-gradient px-2 pt-1">
+            <div *ngIf="groups.length > 1" class="pb-1">
+                <select class="form-select form-select-sm px-2 py-1" [(ngModel)]="group" (change)="setGroup(group)">
+                    <option *ngFor="let group of groups" [value]="group">{{group}}</option>
+                </select>
+            </div>
+            <table class="w-100">
+                <ng-container *ngFor="let track of tracks">
+                    <tr *ngIf="!track.isDisabled" class="">
+                        <td [innerHtml]="track.title" class="small text-nowrap w-100"></td>
+                        <td class="btn-group btn-group-sm ps-2 pb-1">
+                            <button type="button" class="btn" [ngClass]="track.volumeBtnClass('Off')"
+                                (click)="track.setVolume('Off')">
+                                <i class="bi-volume-mute-fill"></i>
+                            </button>
+                            <button type="button" class="btn" [ngClass]="track.volumeBtnClass('Normal')"
+                                (click)="track.setVolume('Normal')">
+                                <i class="bi-volume-down-fill"></i>
+                            </button>
+                            <button type="button" class="btn" [ngClass]="track.volumeBtnClass('High')"
+                                (click)="track.setVolume('High')">
+                                <i class="bi-volume-up-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </table>
+        </div>
+    </div>
+    <div id="app-footer" class="p-1 bg-dark text-light">
+        <div class="d-flex justify-content-center">
+            <a href="home" class="btn btn-sm btn-primary">
+                <i class="bi-card-list"></i>
+            </a>
+            <div class="btn-group btn-group-sm mx-1" [ngSwitch]="isPlaying">
+                <button type="button" class="btn btn-primary" (click)="goToFirst()">
+                    <i class="bi-skip-start-fill"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="goToPrevious()">
+                    <i class="bi-skip-backward-fill"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="play()" *ngSwitchCase="false">
+                    <i class="bi-play-fill"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="pause()" *ngSwitchCase="true">
+                    <i class="bi-pause-fill"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="goToNext()">
+                    <i class="bi-skip-forward-fill"></i>
+                </button>
+            </div>
+            <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-primary" (click)="slower()">
+                    <i class="bi-dash-circle"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="normal()">
+                    <small [innerHtml]="speed"></small>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="faster()">
+                    <i class="bi-plus-circle"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+
+<!--
+<fieldset id="app-viewport" [disabled]="isBusy">
+    <div class="p-1 bg-dark text-light">
+        <app-song-header [songId]="songId" [song]="this"></app-song-header>
+    </div>
+    <div id="app-container">
+        <div id="app-breakdown" class="card">
+            <div class="card-body px-2 py-1">
+                <p>One</p>
+                <p>One</p>
+                <p>One</p>
+            </div>
+        </div>
+        <div id="app-instruments" class="card">
+            <div *ngIf="groups.length > 1" class="card-header p-1">
+                <select class="form-select form-select-sm px-2 py-1" [(ngModel)]="group" (change)="setGroup(group)">
+                    <option *ngFor="let group of groups" [value]="group">{{group}}</option>
+                </select>
+            </div>
+            <div class="card-body p-0 pt-1">
+                <div *ngFor="let track of tracks" class="w-100">
+                    <div class="app-track" *ngIf="!track.isDisabled">
+                        <small [innerHtml]="track.title" class="app-track-title"></small>
+                        <div class="btn-group btn-group-sm ms-1">
+                            <button type="button" class="btn" [ngClass]="track.volumeBtnClass('Off')"
+                                (click)="track.setVolume('Off')">
+                                <i class="fas fa-fw fa-volume-mute"></i>
+                            </button>
+                            <button type="button" class="btn" [ngClass]="track.volumeBtnClass('Normal')"
+                                (click)="track.setVolume('Normal')">
+                                <i class="fas fa-fw fa-volume-down"></i>
+                            </button>
+                            <button type="button" class="btn" [ngClass]="track.volumeBtnClass('High')"
+                                (click)="track.setVolume('High')">
+                                <i class="fas fa-fw fa-volume-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-1 bg-dark text-light">
+        <div class="d-flex justify-content-center">
+            <a href="home" class="btn btn-sm btn-primary">
+                <i class="fas fa-fw fa-list"></i>
+            </a>
+            <div class="btn-group btn-group-sm mx-1" [ngSwitch]="isPlaying">
+                <button type="button" class="btn btn-primary">
+                    <i class="fas fa-fw fa-fast-backward"></i>
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <i class="fas fa-fw fa-backward"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="play()" *ngSwitchCase="false">
+                    <i class="fas fa-fw fa-play"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="pause()" *ngSwitchCase="true">
+                    <i class="fas fa-fw fa-pause"></i>
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <i class="fas fa-fw fa-forward"></i>
+                </button>
+            </div>
+            <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-primary" (click)="speedDown()">
+                    <i class="fas fa-fw fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="speedNormal()">
+                    <small [innerHtml]="speed"></small>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="speedUp()">
+                    <i class="fas fa-fw fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</fieldset>
+-->

@@ -1,23 +1,16 @@
-<nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">eMusicality</a>
+<div class="d-flex flex-column h-100">
+    <div class="p-1 bg-dark text-light text-center lh-1">
+        <h5 class="mb-0">Musicality</h5>
+        <small class="text-muted">by Pierre Henry</small>
     </div>
-</nav>
-<div class="container">
-    <div class="mx-auto" style="max-width: 576px;">
-        <div class="list-group">
-            <a *ngFor="let song of songs | keyvalue" [href]="href(song.key)"
-                class="list-group-item list-group-item-action">
-                <div class="d-flex align-items-center">
-                    <img [src]="imageSrc(song.key)" class="img-thumbnail" style="width: 60px; height: 60px;">
-                    <div class="flex-fill lh-sm d-inline-block text-truncate mx-2">
-                        <span [innerHtml]="song.value.title"></span>
-                        <br>
-                        <small class="text-muted" [innerHtml]="song.value.artist">{{song.value.artist}}</small>
-                    </div>
-                    <small class="badge bg-primary rounded-pill ms-2" [innerHtml]="song.value.genre"></small>
-                </div>
-            </a>
+    <div class="p-1 flex-fill">
+        <div class="mx-auto" style="max-width: 576px;">
+            <div class="list-group">
+                <a *ngFor="let song of songs | keyvalue" [href]="href(song.key)"
+                    class="list-group-item list-group-item-action">
+                    <app-song-header [songId]="song.key" [song]="song.value"></app-song-header>
+                </a>
+            </div>
         </div>
     </div>
 </div>

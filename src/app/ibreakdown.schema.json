@@ -9,9 +9,9 @@
                     "title": "beatsPerMeasure",
                     "type": "number"
                 },
-                "bpm": {
-                    "title": "bpm",
-                    "type": "number"
+                "contexts": {
+                    "$ref": "#/definitions/IContexts",
+                    "title": "contexts"
                 },
                 "sections": {
                     "items": {
@@ -19,14 +19,48 @@
                     },
                     "title": "sections",
                     "type": "array"
+                },
+                "tracks": {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/ITrack"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "title": "tracks",
+                    "type": "array"
+                },
+                "trimStart": {
+                    "title": "trimStart",
+                    "type": "number"
                 }
             },
             "required": [
-                "beatsPerMeasure",
-                "bpm",
-                "sections"
+                "sections",
+                "tracks"
             ],
             "title": "IBreakdown",
+            "type": "object"
+        },
+        "IContexts": {
+            "additionalProperties": {
+                "enum": [
+                    "danger",
+                    "dark",
+                    "info",
+                    "light",
+                    "primary",
+                    "secondary",
+                    "success",
+                    "warning"
+                ],
+                "type": "string"
+            },
+            "title": "IContexts",
             "type": "object"
         },
         "IMeasure": {
@@ -35,13 +69,6 @@
                 "beats": {
                     "title": "beats",
                     "type": "number"
-                },
-                "split": {
-                    "enum": [
-                        true
-                    ],
-                    "title": "split",
-                    "type": "boolean"
                 },
                 "structure": {
                     "title": "structure",
@@ -54,35 +81,46 @@
         "ISection": {
             "additionalProperties": false,
             "properties": {
-                "measures": {
-                    "anyOf": [
-                        {
-                            "items": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/definitions/IMeasure"
-                                    },
-                                    {
-                                        "enum": [
-                                            true
-                                        ],
-                                        "type": "boolean"
-                                    },
-                                    {
-                                        "type": [
-                                            "string",
-                                            "number"
-                                        ]
-                                    }
-                                ]
-                            },
-                            "type": "array"
-                        },
-                        {
-                            "type": "number"
-                        }
+                "context": {
+                    "enum": [
+                        "danger",
+                        "dark",
+                        "info",
+                        "light",
+                        "primary",
+                        "secondary",
+                        "success",
+                        "warning"
                     ],
-                    "title": "measures"
+                    "title": "context",
+                    "type": "string"
+                },
+                "phrases": {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/definitions/IMeasure"
+                                        },
+                                        {
+                                            "type": [
+                                                "string",
+                                                "number"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "number"
+                            }
+                        ]
+                    },
+                    "title": "phrases",
+                    "type": "array"
                 },
                 "structure": {
                     "title": "structure",
@@ -94,11 +132,38 @@
                 }
             },
             "required": [
-                "measures",
-                "structure",
+                "phrases",
                 "title"
             ],
             "title": "ISection",
+            "type": "object"
+        },
+        "ITrack": {
+            "additionalProperties": false,
+            "properties": {
+                "groups": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ],
+                    "title": "groups"
+                },
+                "title": {
+                    "title": "title",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "title"
+            ],
+            "title": "ITrack",
             "type": "object"
         }
     }

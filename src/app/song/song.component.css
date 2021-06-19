@@ -1,0 +1,61 @@
+#app-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 8px;
+  overflow: hidden;
+}
+
+#app-breakdown {
+  width: 100%;
+  overflow: hidden;
+}
+
+#app-tracks {
+  min-width: fit-content;
+  overflow: auto;
+}
+
+.app-track {
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+@media (orientation: portrait) {
+  #app-container {
+    flex-direction: column;
+  }
+  #app-breakdown {
+    margin-bottom: 8px;
+    min-height: 40%;
+  }
+  #app-tracks {
+      overflow-x: hidden;
+      max-height: fit-content;
+  }
+  #app-track {
+      text-overflow: ellipsis;
+  }
+}
+
+@media (orientation: landscape) {
+  #app-container {
+    flex-direction: row-reverse;
+  }
+  #app-breakdown {
+    margin-left: 8px;
+    width: 100%;
+  }
+  #app-tracks {
+      height: 100%;
+  }
+  #app-footer *  {
+    font-size: 2.5vw;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
